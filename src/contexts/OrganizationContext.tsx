@@ -150,18 +150,19 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   type CreateOrgResponse = { success?: boolean; ErrorCode?: number; Message?: string };
 
-  const createOrganization = async (data: CreateOrgData): Promise<CreateOrgResponse | null> => {
+  const createOrganization = async (
+    data: CreateOrgData
+  ): Promise<CreateOrgResponse | null> => {
     try {
       const res = await OrganizationAPI.create({
         name: data.name,
         domain: data.domain?.toString() ?? "",
       });
-      // Re-sync quietly so the page just updates (no overlay)
       await refresh({ quiet: true });
       return res as CreateOrgResponse;
-    } catch (e) {
-      console.error("OrganizationAPI.create failed", e);
-      return e as CreateOrgResponse;
+    } catch (err: any) {
+      // ApiError from your http.ts
+      return (err.data as CreateOrgResponse) || { Message: err.message };
     }
   };
 

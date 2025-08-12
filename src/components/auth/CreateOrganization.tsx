@@ -26,8 +26,13 @@ export const CreateOrganization: React.FC = () => {
 
     try {
       setSubmitting(true);
-      await createOrganization({ name: name, domain });
-      showToast("Organization created successfully.", "success");
+      const res = await createOrganization({ name, domain });
+
+      if (res?.ErrorCode) {
+        showToast(res.Message || "Something went wrong", "error");
+      } else {
+        showToast("Organization created successfully", "success");
+      }
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
       showToast(err?.Message || "Failed to create organization. Please try again.", "error");
