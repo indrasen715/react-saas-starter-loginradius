@@ -29,7 +29,7 @@ export const CreateOrganization: React.FC = () => {
       const res = await createOrganization({ name, domain });
 
       if (res?.ErrorCode) {
-        showToast(res.Message || "Something went wrong", "error");
+        showToast(res.Description || "Something went wrong", "error");
       } else {
         showToast("Organization created successfully", "success");
       }

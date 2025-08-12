@@ -162,7 +162,7 @@ export const OrganizationProvider: React.FC<{ children: React.ReactNode }> = ({ 
       return res as CreateOrgResponse;
     } catch (err: any) {
       // ApiError from your http.ts
-      return (err.data as CreateOrgResponse) || { Message: err.message };
+      return (err.data as CreateOrgResponse) || { Description: err.Description };
     }
   };
 
