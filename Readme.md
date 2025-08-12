@@ -1,6 +1,7 @@
 #  🚀 SaaS Starter Kit — Powered by LoginRadius
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/indrasen715/react-saas-starter-loginradius "Deploy with Vercel")
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Findrasen715%2Freact-saas-starter-loginradius&project-name=react-saas-starter-loginradius&repo-name=react-saas-starter-loginradius&env=VITE_LOGINRADIUS_API_KEY,VITE_LOGINRADIUS_WRAPPER_BASE_URL,VITE_LOGINRADIUS_API_BASE_URL&envDescription=Environment%20variables%20for%20LoginRadius%20Starter&envLink=https%3A%2F%2Fwww.loginradius.com%2Fdocs%2F&VITE_LOGINRADIUS_API_KEY=8b95fe7e-6dd1-4157-8e5c-f49de4257930&VITE_LOGINRADIUS_WRAPPER_BASE_URL=https%3A%2F%2Fauth-ignite.onrender.com&VITE_LOGINRADIUS_API_BASE_URL=https%3A%2F%2Fdevapi.lrinternal.com)
+
 
 A **B2B SaaS Starter Kit** to help startups ship faster — integrated with **LoginRadius Authentication** and **Partner IAM** for multi-org team management.
 
