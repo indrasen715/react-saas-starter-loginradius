@@ -37,7 +37,7 @@ export const LoginForm: React.FC<LoginFormProps> = () => {
 
   // Query param control
   const [searchParams] = useSearchParams();
-  const hideQR = searchParams.get("vtype") === "orginvite";
+  const hideQR = searchParams.get("vtype") === "orginvite" || searchParams.get("vtype") === "emailverification" || searchParams.get("vtype") === "reset";
 
   // Polling control refs
   const qrAbortRef = useRef<AbortController | null>(null);
