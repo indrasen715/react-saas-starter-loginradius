@@ -4,6 +4,7 @@ import { Building2, Globe } from "lucide-react";
 import { Card, CardHeader, CardContent } from "../ui/Card";
 import { Input } from "../ui/input";
 import { useOrganization } from "../../contexts/OrganizationContext";
+import { showToast } from "../utils/showToast";
 
 export const CreateOrganization: React.FC = () => {
   const navigate = useNavigate();
@@ -19,16 +20,17 @@ export const CreateOrganization: React.FC = () => {
     setError(null);
 
     if (!name.trim()) {
-      setError("Organization name cannot be empty or spaces only.");
+      showToast("Organization name cannot be empty or spaces only.", "error");
       return;
     }
 
     try {
       setSubmitting(true);
       await createOrganization({ name: name, domain });
+      showToast("Organization created successfully.", "success");
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
-      setError(err?.message || "Failed to create organization. Please try again.");
+      showToast(err?.Message || "Failed to create organization. Please try again.", "error");
       console.error("createOrganization error:", err);
     } finally {
       setSubmitting(false);
