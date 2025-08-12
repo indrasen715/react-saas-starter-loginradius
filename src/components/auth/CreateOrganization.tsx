@@ -5,23 +5,12 @@ import { Card, CardHeader, CardContent } from "../ui/Card";
 import { Input } from "../ui/input";
 import { useOrganization } from "../../contexts/OrganizationContext";
 
-function slugify(v: string) {
-  return v
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9-]/g, "")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
 export const CreateOrganization: React.FC = () => {
   const navigate = useNavigate();
-  const { createOrganization, loading: orgLoading } = useOrganization();
+  const { createOrganization } = useOrganization();
 
   const [name, setName] = useState("");
-  const [domain, setDomain] = useState("");          // UI-only (unless your API accepts it)
-  const [domainDirty, setDomainDirty] = useState(false); // has user edited domain manually?
+  const [domain, setDomain] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -29,43 +18,22 @@ export const CreateOrganization: React.FC = () => {
     e.preventDefault();
     setError(null);
 
-    const trimmed = name.trim();
-    if (!trimmed) {
-      setError("Please enter an organization name.");
+    if (!name.trim()) {
+      setError("Organization name cannot be empty or spaces only.");
       return;
     }
 
     try {
       setSubmitting(true);
-      await createOrganization({ name: trimmed, domain });
+      await createOrganization({ name: name, domain });
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
-      const msg =
-        err?.message ||
-        err?.error ||
-        "Failed to create organization. Please try again.";
-      setError(msg);
+      setError(err?.message || "Failed to create organization. Please try again.");
       console.error("createOrganization error:", err);
     } finally {
       setSubmitting(false);
     }
   };
-
-  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const v = e.target.value;
-    setName(v);
-    // Only auto-generate the domain from name until the user edits domain manually
-    if (!domainDirty) {
-      setDomain(slugify(v));
-    }
-  };
-
-  const onDomainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDomainDirty(true);
-    setDomain(slugify(e.target.value));
-  };
-
-  const isBusy = submitting || orgLoading;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -91,30 +59,30 @@ export const CreateOrganization: React.FC = () => {
                 label="Organization Name"
                 name="orgName"
                 value={name}
-                onChange={onNameChange}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Acme Corporation"
                 required
                 className="text-lg"
-                disabled={isBusy}
+                disabled={submitting}
               />
 
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
-                  Organization Domain
+                  Organization Domain (optional)
                 </label>
                 <div className="flex items-center space-x-2">
                   <Globe className="w-5 h-5 text-gray-400" />
                   <Input
                     name="orgDomain"
                     value={domain}
-                    onChange={onDomainChange}
+                    onChange={(e) => setDomain(e.target.value)}
                     placeholder="acme-corporation"
                     className="flex-1"
-                    disabled={isBusy}
+                    disabled={submitting}
                   />
                 </div>
                 <p className="text-xs text-gray-500">
-                  This is your organization’s identifier.
+                  This is your organization identifier. You can change it later.
                 </p>
               </div>
             </div>
@@ -122,10 +90,10 @@ export const CreateOrganization: React.FC = () => {
             <div className="pt-4">
               <button
                 type="submit"
-                disabled={isBusy || !name.trim()}
+                disabled={submitting || !name.trim()}
                 className="w-full py-3 text-lg font-semibold rounded bg-blue-600 text-white disabled:opacity-50 flex items-center justify-center"
               >
-                {isBusy ? (
+                {submitting ? (
                   <>
                     <span className="mr-2 inline-block h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
                     Creating...

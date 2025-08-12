@@ -1,12 +1,13 @@
 import React from 'react';
-import { 
-  Home, 
-  Users, 
-  Settings, 
-  Building2, 
+import {
+  Home,
+  Users,
+  Settings,
+  Building2,
   UserPlus,
   BarChart3,
-  FileText
+  FileText,
+  Shield
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -17,11 +18,12 @@ interface SidebarProps {
 
 const navigation = [
   { name: 'Overview', icon: Home, id: 'overview' },
+  { name: 'Organization', icon: Building2, id: 'organization' },
   { name: 'Invitations', icon: Users, id: 'invitations' },
   { name: 'Team Members', icon: Users, id: 'members' },
   { name: 'Analytics', icon: BarChart3, id: 'analytics' },
   { name: 'Documents', icon: FileText, id: 'documents' },
-  { name: 'Organization', icon: Building2, id: 'organization' },
+  { name: 'Verfied Credentials', icon: Shield, id: 'verified-credentials' },
   { name: 'Settings', icon: Settings, id: 'settings' },
 ];
 

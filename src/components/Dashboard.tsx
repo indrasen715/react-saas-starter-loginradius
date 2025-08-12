@@ -7,6 +7,7 @@ import { TeamManagement } from './team/TeamManagement';
 import { ProfileSettings } from './profile/ProfileSettings';
 import { OrganizationManagement } from './organization/OrganizationManagement';
 import { TeamMembers } from './team/TeamMembers';
+import VerifiedCredentials from './dashboard/VerifiedCredentials';
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export const Dashboard: React.FC = () => {
           <div className="p-8">
             <Routes>
               <Route path="/" element={<Navigate to="/dashboard/overview" replace />} />
+               <Route path="/verified-credentials" element={<VerifiedCredentials />} />
               <Route path="/overview" element={<DashboardOverview />} />
               <Route path="/invitations" element={<TeamManagement />} />
               <Route path="/members" element={<TeamMembers />} />
